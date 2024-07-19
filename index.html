@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartChat Website</title>
+<link rel="icon" type="image/x-icon" href="ic_logo_transparent.png">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('background.jpg');
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        font-size: 5vw;
+    }
+
+    .container {
+        position: relative;
+        overflow-y: auto; /* Enable vertical scrolling */
+        height: auto; /* Set container height to auto */
+        padding: 2.5% 1% 1% 1%;
+    }
+
+    .screenshot {
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: block;
+    }
+
+    .screenshot.active {
+        opacity: 1;
+    }
+
+    .screenshot img {
+        height: 83vh;
+        width: auto;
+        display: block;
+        margin: 7vh auto; /* Center the images horizontally */
+        transition: transform 0.3s ease; /* Add transition for scaling effect */
+    }
+
+    .screenshot.visible img {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .screenshot-text {
+        text-align: center;
+        margin-bottom: 5vh;
+    }
+
+    .download-button {
+        display: block;
+        margin: 4vw auto; /* Center the download button horizontally and provide spacing */
+        background-color: #01def9;
+        color: #fff;
+        padding: 2vw 4vw;
+        border: none;
+        border-radius: 1vw;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 5vw;
+    }
+
+    .download-button:hover {
+        background-color: #009bbd;
+    }
+
+    .youtube-video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+    }
+
+    /* Circular overlay */
+    .overlay-circle {
+        position: fixed;
+        width: 17%;
+        aspect-ratio: 1;
+        bottom: 4vw;
+        right: 4%;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    
+    .projection {
+        position:fixed;
+        width:17%;
+        aspect-ratio: 1;
+        right: 21%;
+        bottom: 9vw;
+        z-index: 1050;
+        display: none;
+    }
+    
+    /* Dialog box */
+    .dialog-box {
+        position: fixed;
+        bottom: 3vw;
+        right: 38%;
+        width: 60.5%;
+        height: auto;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+        display: none;
+        background-image: url('background.jpg');
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat
+    }
+
+    .dialog-content-1 {
+        margin-left: 2%;
+        margin-right: 2%;
+        font-size: 4vw;
+    }
+    
+    .dialog-content {
+        margin-left: 2%;
+        margin-right: 2%;
+        font-size: 4vw;
+    }
+    
+    .contact-section {
+        text-align: center;
+        font-size: 4vw;
+    }
+
+    .contact-section a {
+        color: #000;
+        margin: 0 10%;
+        text-decoration: none;
+    }
+
+    .contact-section a:hover {
+        text-decoration: underline;
+    }
+    
+    .question-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .question-list li {
+        margin-bottom: 6%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .question-list li:hover {
+        background-color: #01def9;
+    }
+
+    .answer {
+        background-color: #f0f0f0;
+        color: black;
+        margin-bottom: 1%;
+    }
+    
+    /* Dialog box */
+    .dialog-box-1 {
+        position: fixed;
+        right: 25%;
+        bottom: 45%;
+        width: 50%;
+        height: auto;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+        display: none;
+        background-image: url('background.jpg');
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat
+    }
+
+    .dialog-header {
+        display: flex;
+        margin-left: 2%;
+        font-weight: bold;
+        cursor: move;
+        align-items: center;
+    }
+
+    .minimize-button {
+        margin-left: auto;
+        cursor: pointer;
+        width: 8vw;
+        aspect-ratio: 1;
+        opacity: 0.5;
+    }
+    
+    .logo {
+        margin-top: 2%;
+        margin-left: 0.5%;
+        float: left;
+        width: 25vw;
+        aspect-ratio: 1;
+    }
+    
+    .header {
+        display: flex;
+        margin-top: 2%;
+        height: 12.5vw;
+        justify-content: center;
+        align-items: end;
+        font-size: 6vw;
+        font-weight: bold;
+        color: #01def9;
+    }
+    .header-1 {
+        display: flex;
+        margin-top: 2%;
+        height: 8vw;
+        justify-content: center;
+        font-size: 4.5vw;
+    }
+    
+    .title {
+        font-size: 6vw;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .banner {
+        margin-top: 4.5%;
+        margin-bottom: 0;
+        margin-left: 1.5%;;
+        width: 97%;
+        height: auto;
+    }
+    
+    #loader {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      z-index: 99999;  
+      background: #008393
+    }
+    
+    .loading-bar {
+        width: 10vw;
+        aspect-ratio: 1;
+        animation: rotate 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes rotate {
+       from { transform: rotate(0deg); }
+       to { transform: rotate(180deg); }
+    }
+</style>
+</head>
+<body>
+<div id="loader"><img src="ic_refresh.png" class="loading-bar"/></div>
+<div class="container">
+    <div>
+        <img src="banner.jpg" class="banner">
+    </div>
+    
+    <hr color="#008393"  width="100%" style="height:1vh;margin-top:0;">
+    
+    <div>
+        <img src="logo.png" class="logo">
+        <p class="header"><b>SmartChat</b></p>
+        <p class="header-1"><i>'Chat Assistant for Android Gamers'</i></p>
+    </div>
+    
+    <hr color="#008393"  width="100%">
+    
+    <div class="screenshot">
+        <img src="s4.png" alt="Screenshot 1">
+        <li class="screenshot-text">all messages in one chat bubble</li>
+    </div>
+    
+    <hr color="#008393"  width="100%">
+
+    <div class="screenshot">
+        <img src="s1.png" alt="Screenshot 2">
+        <li class="screenshot-text">no need to find messages in the cluttered notification center</li>
+    </div>
+
+    <hr color="#008393"  width="100%">
+    
+    <div class="screenshot">
+        <img src="s2.png" alt="Screenshot 3">
+        <li class="screenshot-text">automatically highlights messages based on priority</li>
+        <li class="screenshot-text">consensually stores chats and generates reply for every new message</li>
+    </div>
+
+    <hr color="#008393"  width="100%">
+    
+    <div class="screenshot">
+        <img src="s3.png" alt="Screenshot 4">
+        <li class="screenshot-text">send cool & forbidden text emojis</li>
+    </div>
+
+    <hr color="#008393"  width="100%">
+    
+    <!-- Embedded YouTube video -->
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/pSJr_wFka2k?autoplay=1&mute=1&enablejsapi=1&rel=0&showinfo=0&controls=0" allow="autoplay" allowscriptaccess="always" frameborder="0"></iframe>
+
+    <button onclick="download()" class="download-button" id="downloadButton">Download APK</button>
+
+    <div class="contact-section">
+        <a onclick="toggleDialog1()">Contact Me</a>
+        <a href="SmartChatIOPrivacyPolicy.html">Privacy Policy</a>
+    </div>
+
+    <!-- Circular overlay -->
+    <img src="ic_logo.png" class="overlay-circle" id="overlayCircle" onclick="toggleDialog()">
+    <img src="projection.png" class="projection" id="Projection">
+
+    <!-- Dialog box -->
+    <div class="dialog-box" id="dialogBox">
+        <div class="dialog-header draggable">
+            FAQs
+            <img class="minimize-button" src="ic_close.png" alt="close" onclick="toggleDialog()">
+        </div>
+        <hr color="#008393"  width="98%" style="margin-top:0;">
+        <div class="dialog-content">
+            <!-- Chat bot content goes here -->
+            <ul class="question-list" id="questionList">
+                <li onclick="askQuestion(0)">Why is this app not on Google Play Store?</li>
+                <li onclick="askQuestion(1)">Why should I download this app?</li>
+                <li onclick="askQuestion(2)">How do I know about how good is the app without reviews?</li>
+                <!-- Add more questions here -->
+            </ul>
+            <div class="answer" id="answer"></div>
+        </div>
+    </div>
+    <!-- Dialog box -->
+    <div class="dialog-box-1" id="dialogBox1">
+        <div class="dialog-header draggable">
+            Contact Me
+            <img class="minimize-button" src="ic_close.png" alt="close" onclick="toggleDialog1()">
+        </div>
+        <hr color="#008393"  width="98%" style="margin-top:0;">
+        <div class="dialog-content-1">
+            email : prajwal8074@gmail.com<br>
+            <br>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle dialog box visibility
+    function toggleDialog() {
+        const dialogBox = document.getElementById('dialogBox');
+        dialogBox.style.display = dialogBox.style.display === 'none' ? 'block' : 'none';
+        const projection = document.getElementById('Projection');
+        projection.style.display = projection.style.display === 'none' ? 'block' : 'none';
+    }
+    function toggleDialog1() {
+        const dialogBox = document.getElementById('dialogBox1');
+        dialogBox.style.display = dialogBox.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function download() {
+        window.open("https://rb.gy/g3u9no","_self");
+        window.alert("Drive will start install after downloading...");
+    }
+
+    // Make the dialog box draggable
+    dragElement(document.getElementById('dialogBox'));
+
+    function dragElement(elmnt) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.id + "-header")) {
+            // if present, the header is where you move the DIV from:
+            document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+        } else {
+            // otherwise, move the DIV from anywhere inside the DIV:
+            elmnt.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+                        // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            // stop moving when mouse button is released:
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+    
+    const questions = [
+        "Due to recent policies of Google Play Store in August, 2023, many apps from small developers have been removed from the platform without justifiable reasons and their accounts have been terminated. So I found this alternative for my apps to be independent of any platform's ignorant policies. I create genuine apps and have a passion for it.",
+        "SmartChat is not a normal chat bubble app, it contains many features specific to gamers like violent, offensive & suggesting emojis, reply generator bot, sender priority etc",
+        "The app is in starting phase of its launch, so not much can be stated"
+    ];
+
+    function askQuestion(index) {
+        const answerDiv = document.getElementById("answer");
+        answerDiv.innerText = questions[index];
+    }
+
+    const screenshots = document.querySelectorAll('.screenshot');
+    const youtubeVideo = document.querySelector('.youtube-video');
+
+    youtubeVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    
+    // Function to handle scrolling
+    function handleScroll() {
+        screenshots.forEach(function(screenshot) {
+            const screenshotTop = screenshot.offsetTop;
+            const screenshotHeight = screenshot.offsetHeight;
+            const halfScreenHeight = window.innerHeight / 2; // Half of the viewport height
+            if (window.scrollY + halfScreenHeight*2 - screenshotHeight/10 > screenshotTop) {
+                screenshot.classList.add('active');
+            }
+            if (window.scrollY - screenshotHeight*0.25 < screenshotTop && window.scrollY + halfScreenHeight*2 > screenshotTop + screenshotHeight*0.75) {
+                screenshot.classList.add('visible');
+            } else {
+                screenshot.classList.remove('visible');
+            }
+        });
+
+        // Check if YouTube video is in viewport
+        const ytTop = youtubeVideo.offsetTop;
+        const ytHeight = youtubeVideo.offsetHeight;
+        const halfScreenHeight = window.innerHeight / 2; // Half of the viewport height
+        if (window.scrollY + halfScreenHeight*2 - ytHeight > ytTop) {
+            youtubeVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+        else{
+            youtubeVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+    }
+
+    function removeLoader(){
+        let loader = document.getElementById('loader');
+        // hide the loader
+        loader.style = 'display: none;';
+    } 
+    window.onload = function(){
+        removeLoader();
+        // Event listener for scroll
+        window.addEventListener('scroll', handleScroll);    
+        handleScroll();
+    }
+</script>
+</body>
+</html>

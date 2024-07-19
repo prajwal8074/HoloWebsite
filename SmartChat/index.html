@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartChat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size:7vw;
+      margin: 0;
+      padding: 0;
+      background-image: url('background.jpg');
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #fff;
+    }
+    .container {
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .logo {
+      margin-top: 3vh;
+      width: 25%;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    .screenshots {
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-bottom: 20px;
+    }
+    .screenshot {
+      display: inline-block;
+      margin: 0 5px;
+      max-width: 100%;
+      height: 100vh; /* Set height relative to viewport height */
+    }
+    
+    .image {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .download-btn {
+      display: inline-block;
+      background-color: #00e5ff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5vh;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-bottom: 3vw;
+    }
+    .download-btn:hover {
+      background-color: #007885;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      margin-bottom: 20px;
+    }
+    .video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="logo.png" alt="App Logo">
+    <h1>SmartChat</h1>
+    <p style="font-size:3vw">SmartChat is a chat assistant and manager for gamers<br><br>
+        Features :<br>send cool & forbidden text emojis
+            <br>all messages in one chat bubble
+            <br>automatically highlights messages based on priority
+            <br>no need to find messages in the cluttered notification center
+            <br>consensually stores chats and generates reply for every new message
+            <br>supports most of social media apps</p>
+    
+    <div class="screenshots">
+      <img class="screenshot" src="s4.png" alt="Screenshot 4">
+      <img class="screenshot" src="s1.png" alt="Screenshot 1">
+      <img class="screenshot" src="s2.png" alt="Screenshot 2">
+      <img class="screenshot" src="s3.png" alt="Screenshot 3">
+      <!-- Add more screenshot images as needed -->
+    </div>
+    
+    <img class="image" src="image.png" alt="Image">
+    
+    <div class="video-container">
+      <iframe class="video" src="https://www.youtube.com/embed/hErooV0xZmc" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <a class="download-btn" href="https://itunes.apple.com/your-app-download-link" target="_blank">Download from App Store</a>
+  </div>
+</body>
+</html>
