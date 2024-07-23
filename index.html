@@ -135,8 +135,13 @@
         margin: 0 10%;
         text-decoration: none;
         color: #01def9;
+        font-weight: bold;
     }
 
+    .contact-section a:hover {
+        color: 009bbd;
+    }
+    
     .question-list {
         list-style-type: none;
         padding: 0;
@@ -307,7 +312,7 @@
     <button onclick="download()" class="download-button" id="downloadButton">Install</button>
 
     <div class="contact-section">
-        <a onclick="toggleDialog1()">Contact Me</a>
+        <a  onmouseover="toggleDialog1()" onclick="toggleDialog1()">Contact Me</a>
         <a href="HoloChatIOPrivacyPolicy.html">Privacy Policy</a>
     </div>
 
