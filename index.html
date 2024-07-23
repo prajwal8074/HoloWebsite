@@ -87,6 +87,15 @@
         z-index: 1000;
         border-radius: 50%;
     }
+
+    .black-back {
+        position:fixed;
+        width:100%;
+        height: 100%;
+        aspect-ratio: 1;
+        z-index: 999;
+        display: none;
+    }
     
     .projection {
         position:fixed;
@@ -111,8 +120,7 @@
         background-image: url('background.jpg');
         background-size: 100% 100%;
         background-position: center;
-        background-repeat: no-repeat;
-        background-color: #000000;
+        background-repeat: no-repeat
     }
 
     .dialog-content-1 {
@@ -318,6 +326,7 @@
     </div>
 
     <!-- Circular overlay -->
+    <img src="black.png" class="black-back" id="Black">
     <img src="faq.png" class="overlay-circle" id="overlayCircle" onmouseover="toggleDialog()" onclick="toggleDialog()">
     <img src="projection.png" class="projection" id="Projection">
 
@@ -359,11 +368,15 @@
         const dialogBox = document.getElementById('dialogBox');
         dialogBox.style.display = dialogBox.style.display === 'none' ? 'block' : 'none';
         const projection = document.getElementById('Projection');
-        projection.style.display = projection.style.display === 'none' ? 'block' : 'none';
+        projection.style.display = dialogBox.style.display;
+        const blackBack = document.getElementById('Black');
+        blackBack.style.display = dialogBox.style.display;
     }
     function toggleDialog1() {
         const dialogBox = document.getElementById('dialogBox1');
         dialogBox.style.display = dialogBox.style.display === 'none' ? 'block' : 'none';
+        const blackBack = document.getElementById('Black');
+        blackBack.style.display = dialogBox.style.display;
     }
     
     function download() {
